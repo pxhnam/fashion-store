@@ -1,0 +1,44 @@
+{
+    "properties": [
+        {
+            "name": "jwt.name",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.name'"
+        },
+        {
+            "name": "jwt.header",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.header'"
+        },
+        {
+            "name": "jwt.prefix",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.prefix'"
+        },
+        {
+            "name": "jwt.access.secret",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.access.secret'"
+        },
+        {
+            "name": "jwt.access.expires",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.access.expires'"
+        },
+        {
+            "name": "jwt.refresh.secret",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.refresh.secret'"
+        },
+        {
+            "name": "jwt.refresh.expires",
+            "type": "java.lang.String",
+            "description": "A description for 'jwt.refresh.expires'"
+        },
+        {
+            "name": "file.upload-dir",
+            "type": "java.lang.String",
+            "description": "A description for 'file.upload-dir'"
+        }
+    ]
+}
