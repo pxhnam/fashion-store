@@ -32,13 +32,9 @@ public class CategoryService {
         return categoryMapper.toResponseList(categories);
     }
 
-    private Category getOrThrow(UUID id) {
+    public Category findById(UUID id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category not found"));
-    }
-
-    public CategoryResponse findById(UUID id) {
-        return categoryMapper.toResponse(getOrThrow(id));
     }
 
     public CategoryResponse findBySlug(String slug) {
@@ -57,7 +53,7 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponse update(UUID id, UpdateCategoryRequest dto) {
-        Category category = getOrThrow(id);
+        Category category = findById(id);
         if (StringUtils.hasText(dto.getName())) {
             category.setName(dto.getName());
             String slug = makeSlug(id, slugUtil.generate(dto.getName()));
