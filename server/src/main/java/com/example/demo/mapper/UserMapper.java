@@ -19,6 +19,16 @@ import lombok.RequiredArgsConstructor;
 public class UserMapper {
     private final PasswordEncoder encoder;
 
+    public UserResponse toResponse(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .status(user.getStatus())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
     public List<UserResponse> toResponseList(List<User> users) {
         return users.stream()
                 .map(this::toResponse)
@@ -36,15 +46,5 @@ public class UserMapper {
         if (StringUtils.hasText(dto.getEmail())) {
             user.setEmail(dto.getEmail());
         }
-    }
-
-    public UserResponse toResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .status(user.getStatus())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .build();
     }
 }
