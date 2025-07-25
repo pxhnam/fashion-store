@@ -1,14 +1,20 @@
 package com.example.demo.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.request.CreateProductRequest;
-import com.example.demo.entity.Product;
+import com.example.demo.dto.request.UpdateProductRequest;
+import com.example.demo.dto.response.ProductDetailResponse;
+import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -21,17 +27,23 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String index() {
-        return "get product";
+    public List<ProductResponse> index() {
+        return productService.findAll();
     }
 
     @GetMapping("{slug}")
-    public Product slug(@PathVariable String slug) {
+    public ProductDetailResponse slug(@PathVariable String slug) {
         return productService.findBySlug(slug);
     }
 
     @PostMapping
-    public String create(@Valid @ModelAttribute CreateProductRequest request) {
+    public ProductDetailResponse create(@Valid @ModelAttribute CreateProductRequest request) {
         return productService.create(request);
+    }
+
+    @PutMapping("{id}")
+    public ProductDetailResponse update(@PathVariable UUID id,
+            @Valid @ModelAttribute UpdateProductRequest request) {
+        return productService.update(id, request);
     }
 }
