@@ -36,9 +36,6 @@ public class Product extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String slug;
 
-    @Column(nullable = false)
-    private String imageUrl;
-
     @Lob
     private String description;
 

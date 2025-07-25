@@ -28,6 +28,6 @@ public class Image extends BaseEntity {
     private String imageUrl;
 
     @Builder.Default
-    @Column
+    @Column(nullable = false)
     private boolean isPrimary = false;
 }
