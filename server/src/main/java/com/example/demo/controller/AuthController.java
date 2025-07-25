@@ -12,7 +12,7 @@ import com.example.demo.dto.request.RegisterRequest;
 import com.example.demo.dto.response.LoginResponse;
 import com.example.demo.dto.response.TokenResponse;
 import com.example.demo.mapper.AuthMapper;
-import com.example.demo.records.ClientInfo;
+import com.example.demo.record.ClientInfo;
 import com.example.demo.service.AuthService;
 import com.example.demo.util.CookieUtil;
 import com.example.demo.util.UserAgentUtil;

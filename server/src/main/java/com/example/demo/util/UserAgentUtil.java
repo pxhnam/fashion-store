@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.records.ClientInfo;
+import com.example.demo.record.ClientInfo;
 
 import jakarta.servlet.http.HttpServletRequest;
 

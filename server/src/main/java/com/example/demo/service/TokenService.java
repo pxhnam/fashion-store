@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Token;
 import com.example.demo.entity.User;
 import com.example.demo.enums.EToken;
-import com.example.demo.records.ClientInfo;
+import com.example.demo.record.ClientInfo;
 import com.example.demo.repository.TokenRepository;
 import com.example.demo.security.jwt.Jwt;
 

@@ -22,7 +22,7 @@ import com.example.demo.enums.EToken;
 import com.example.demo.enums.UserStatus;
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.mapper.AuthMapper;
-import com.example.demo.records.ClientInfo;
+import com.example.demo.record.ClientInfo;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.Jwt;
 import com.example.demo.util.MailUtil;
