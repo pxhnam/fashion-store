@@ -1,29 +1,29 @@
 spring:
-    application:
-        name: demo
-    profiles:
-        active: dev
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
-        username: root
-        password:
-    jpa:
-        hibernate:
-            ddl-auto: update
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQL8Dialect
-    servlet:
-        multipart:
-            enabled: true
-            max-file-size: 10MB
-            max-request-size: 10MB
+  application:
+      name: demo
+  profiles:
+      active: dev
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/demo?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=Asia/Ho_Chi_Minh
+      username: root
+      password:
+  jpa:
+      hibernate:
+          ddl-auto: update
+      properties:
+          hibernate:
+              dialect: org.hibernate.dialect.MySQL8Dialect
+  servlet:
+      multipart:
+          enabled: true
+          max-file-size: 10MB
+          max-request-size: 10MB
 
 server:
-    port: 3000
-    servlet:
-        context-path: /api
+  port: 3000
+  servlet:
+      context-path: /api
 
 file:
-    upload-dir: uploads
+  upload-dir: uploads
