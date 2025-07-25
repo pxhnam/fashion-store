@@ -31,8 +31,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@Service
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class AuthService {
     private final AuthenticationManager manager;
     private final UserRepository userRepository;
@@ -51,13 +52,13 @@ public class AuthService {
         if (errorMessage != null) {
             throw new BadRequestException(errorMessage);
         }
+
         String accessToken = jwt.generate(user.getId());
         String refreshToken = jwt.generate(user.getId(), EToken.REFRESH);
         tokenService.create(user, refreshToken, client);
         return authMapper.toResponse(user.getName(), user.getEmail(), accessToken, refreshToken);
     }
 
-    @Transactional
     public void register(RegisterRequest dto) {
         User user = authMapper.toEntity(dto);
         user.setPassword(encoder.encode(user.getPassword()));
@@ -71,7 +72,6 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    @Transactional
     public void verify(String token) {
         User user = userRepository.findByVerifyToken(token)
                 .orElseThrow(() -> new BadRequestException("Invalid verification token"));
@@ -92,7 +92,6 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    @Transactional
     public void resendToken(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BadRequestException("Account with this email does not exist"));
@@ -151,5 +150,4 @@ public class AuthService {
             default -> null;
         };
     }
-
 }
