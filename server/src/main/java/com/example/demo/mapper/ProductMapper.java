@@ -71,6 +71,8 @@ public class ProductMapper {
                                 .quantity(variant.getQuantity())
                                 .build())
                         .collect(Collectors.toList()))
+                .updatedAt(product.getUpdatedAt())
+                .createdAt(product.getCreatedAt())
                 .build();
     }
 }

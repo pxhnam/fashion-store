@@ -1,7 +1,7 @@
 package com.example.demo.security.jwt;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import org.slf4j.MDC;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
             AuthenticationException exception)
             throws IOException, ServletException {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .status(HttpServletResponse.SC_UNAUTHORIZED)
                 .error("Unauthorized")
                 .message(exception.getMessage())

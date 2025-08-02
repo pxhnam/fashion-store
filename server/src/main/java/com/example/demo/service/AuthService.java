@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -80,12 +79,12 @@ public class AuthService {
             throw new BadRequestException("Account is already verified");
         }
 
-        if (user.getTokenExp() == null || user.getTokenExp().isBefore(Instant.now())) {
+        if (user.getTokenExp() == null || user.getTokenExp().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("Verification token has expired");
         }
 
         user.setStatus(UserStatus.ACTIVE);
-        user.setVerifiedAt(Instant.now());
+        user.setVerifiedAt(LocalDateTime.now());
         user.setVerifyToken(null);
         user.setTokenExp(null);
 
@@ -131,8 +130,8 @@ public class AuthService {
         return UUID.randomUUID().toString();
     }
 
-    private Instant genTokenExp() {
-        return Instant.now().plus(15, ChronoUnit.MINUTES);
+    private LocalDateTime genTokenExp() {
+        return LocalDateTime.now().plusMinutes(15);
     }
 
     private void sendVerificationEmail(String email, String token) {

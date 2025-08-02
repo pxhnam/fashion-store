@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -26,19 +26,19 @@ public class BaseEntity {
     private UUID id;
 
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "created_at", updatable = false)
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = Instant.now();
+        this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = Instant.now();
+        this.updatedAt = LocalDateTime.now();
     }
 }

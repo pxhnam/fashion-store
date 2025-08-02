@@ -1,6 +1,6 @@
 package com.example.demo.dto.response;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.example.demo.enums.UserStatus;
@@ -18,6 +18,6 @@ public class UserResponse {
     private UUID id;
     private String email;
     private UserStatus status;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

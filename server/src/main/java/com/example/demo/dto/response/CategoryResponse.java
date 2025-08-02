@@ -1,6 +1,6 @@
 package com.example.demo.dto.response;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +17,6 @@ public class CategoryResponse {
     private String name;
     private String slug;
     private String imageUrl;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

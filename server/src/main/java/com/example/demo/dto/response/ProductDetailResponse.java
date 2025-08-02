@@ -1,6 +1,6 @@
 package com.example.demo.dto.response;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +23,6 @@ public class ProductDetailResponse {
     private ProductStatus status;
     List<ImageResponse> images;
     List<VariantResponse> variants;
-    private Instant updatedAt;
-    private Instant createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 }

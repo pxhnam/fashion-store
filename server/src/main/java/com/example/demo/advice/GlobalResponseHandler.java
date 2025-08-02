@@ -1,6 +1,6 @@
 package com.example.demo.advice;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import org.slf4j.MDC;
 import org.springframework.core.MethodParameter;
@@ -74,7 +74,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
         }
 
         return ApiResponse.builder()
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .path(path)
                 .status(status)
                 .traceId(MDC.get("traceId"))

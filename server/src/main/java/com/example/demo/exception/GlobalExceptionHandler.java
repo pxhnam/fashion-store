@@ -1,7 +1,8 @@
 package com.example.demo.exception;
 
 import java.nio.file.AccessDeniedException;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,7 +77,26 @@ public class GlobalExceptionHandler {
                         (existing, replacement) -> existing));
 
         return ErrorResponse.builder()
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Validation Failed")
+                .message("Invalid request parameters")
+                .path(request.getRequestURI())
+                .traceId(MDC.get("traceId"))
+                .details(fieldErrors)
+                .build();
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleCustomValidation(ValidationException ex, HttpServletRequest request) {
+        log.warn("Custom validation error: {} - {}", ex.getField(), ex.getMessage());
+
+        Map<String, String> fieldErrors = new HashMap<>();
+        fieldErrors.put(ex.getField(), ex.getMessage());
+
+        return ErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Validation Failed")
                 .message("Invalid request parameters")
@@ -173,7 +193,7 @@ public class GlobalExceptionHandler {
 
     private ErrorResponse buildErrorResponse(HttpStatus status, String message, String path) {
         return ErrorResponse.builder()
-                .timestamp(Instant.now().toString())
+                .timestamp(LocalDateTime.now().toString())
                 .status(status.value())
                 .error(status.getReasonPhrase())
                 .message(message)

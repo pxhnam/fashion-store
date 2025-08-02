@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -58,11 +58,11 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private UserStatus status = UserStatus.PENDING;
 
-    private Instant verifiedAt;
+    private LocalDateTime verifiedAt;
 
     private String verifyToken;
 
-    private Instant tokenExp;
+    private LocalDateTime tokenExp;
 
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
