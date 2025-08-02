@@ -13,11 +13,16 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryExistsValidator implements ConstraintValidator<ValidCategory, UUID> {
+public class CategoryExistsValidator implements ConstraintValidator<ValidCategory, String> {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public boolean isValid(UUID id, ConstraintValidatorContext context) {
-        return id != null && categoryRepository.existsById(id);
+    public boolean isValid(String id, ConstraintValidatorContext context) {
+        try {
+            UUID uuid = UUID.fromString(id);
+            return categoryRepository.existsById(uuid);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }
