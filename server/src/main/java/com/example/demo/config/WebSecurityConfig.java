@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -40,6 +41,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     private final CurrentUserArgumentResolver currentUserArgumentResolver;
     private final ForbiddenHandler forbiddenHandler;
     private final FileStorageProperties fileStorageProperties;
+    private final CorsProperties corsProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -68,13 +70,14 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .addResourceLocations(fileStorageProperties.getFileSystemPath());
     }
 
-    // @Override
-    // public void addCorsMappings(CorsRegistry registry) {
-    // registry.addMapping("/api/**")
-    // .allowedOrigins("*")
-    // .allowedMethods("GET", "POST", "PUT", "DELETE")
-    // .allowedHeaders("*");
-    // }
+    @Override
+    public void addCorsMappings(@NonNull CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(corsProperties.getAllowedOrigins().toArray(String[]::new))
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
+                .allowCredentials(true);
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
