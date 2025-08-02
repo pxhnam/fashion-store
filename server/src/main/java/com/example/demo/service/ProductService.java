@@ -18,6 +18,7 @@ import com.example.demo.entity.Category;
 import com.example.demo.entity.Image;
 import com.example.demo.entity.Product;
 import com.example.demo.entity.Variant;
+import com.example.demo.enums.ProductStatus;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.repository.ProductRepository;
@@ -37,7 +38,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public List<ProductResponse> findAll() {
-        return productMapper.toResponseList(productRepository.findAll());
+        return productMapper.toResponseList(productRepository.findByStatus(ProductStatus.ACTIVE));
     }
 
     public Product findById(UUID id) {
@@ -49,6 +50,7 @@ public class ProductService {
     public ProductDetailResponse findBySlug(String slug) {
         return productMapper.toResponse(productRepository
                 .findBySlug(slug)
+                .filter(p -> p.getStatus() == ProductStatus.ACTIVE)
                 .orElseThrow(() -> new NotFoundException("Product not found")));
     }
 
