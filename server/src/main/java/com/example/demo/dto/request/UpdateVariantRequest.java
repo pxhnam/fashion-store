@@ -2,6 +2,8 @@ package com.example.demo.dto.request;
 
 import java.math.BigDecimal;
 
+import com.example.demo.annotation.IsUUID;
+
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +18,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateVariantRequest {
+public class UpdateVariantRequest {
+    @IsUUID
+    private String id;
+
     @NotBlank
     @Size(min = 1, max = 10)
     private String size;

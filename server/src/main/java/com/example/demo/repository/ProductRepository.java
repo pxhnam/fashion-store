@@ -11,4 +11,5 @@ import com.example.demo.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
     Optional<Product> findBySlug(String slug);
+
 }
