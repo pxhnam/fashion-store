@@ -32,7 +32,7 @@ public class CreateProductRequest {
     private String categoryId;
 
     @Builder.Default
-    private ProductStatus status = ProductStatus.ACTIVE;
+    private ProductStatus status = ProductStatus.INACTIVE;
 
     @Valid
     @NotEmpty
