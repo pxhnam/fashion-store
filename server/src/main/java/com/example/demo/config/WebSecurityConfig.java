@@ -86,13 +86,15 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, fileStorageProperties.getUrlPattern())
                         .permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/users/**").hasRole("ADMIN")
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/images/**").hasRole("ADMIN")
+                        .requestMatchers("/variants/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                         .requestMatchers("/products/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
                         .requestMatchers("/categories/**").hasRole("ADMIN")
-                        .requestMatchers("/users/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .authenticationManager(authenticationManager(http))
                 .addFilterBefore(jwtFilter,
