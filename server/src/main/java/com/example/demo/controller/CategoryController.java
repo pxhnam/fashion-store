@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.request.CreateCategoryRequest;
 import com.example.demo.dto.request.UpdateCategoryRequest;
 import com.example.demo.dto.response.CategoryResponse;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.service.CategoryService;
 
 import jakarta.validation.Valid;
@@ -41,8 +43,19 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")
-    public CategoryResponse update(@PathVariable UUID id,
+    public CategoryResponse update(
+            @PathVariable String id,
             @Valid @ModelAttribute UpdateCategoryRequest request) {
-        return categoryService.update(id, request);
+        try {
+            UUID uuid = UUID.fromString(id);
+            return categoryService.update(uuid, request);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException("Invalid UUID format: " + id);
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public String delete() {
+        return "deleted";
     }
 }
