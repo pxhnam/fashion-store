@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entity.User;
+import com.example.demo.enums.UserStatus;
 import com.example.demo.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserById(UUID id) throws UsernameNotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user.getStatus() != UserStatus.ACTIVE) {
+            throw new UsernameNotFoundException("User not found");
+        }
         return UserPrincipal.create(user);
     }
 
@@ -29,6 +33,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (user.getStatus() != UserStatus.ACTIVE) {
+            throw new UsernameNotFoundException("User not found");
+        }
         return UserPrincipal.create(user);
     }
 }

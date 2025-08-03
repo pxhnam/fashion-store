@@ -4,12 +4,15 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Token;
 import com.example.demo.entity.User;
 import com.example.demo.enums.EToken;
+import com.example.demo.enums.UserStatus;
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.record.ClientInfo;
 import com.example.demo.repository.TokenRepository;
 import com.example.demo.security.jwt.Jwt;
@@ -41,9 +44,21 @@ public class TokenService {
             if (token == null || token.trim().isEmpty())
                 return false;
             String hashedToken = hash(token);
-            boolean exists = tokenRepository.findByToken(hashedToken).isPresent();
-            if (!exists)
+            Optional<Token> tokenOpt = tokenRepository.findByToken(hashedToken);
+            if (tokenOpt.isEmpty()) {
                 return false;
+            }
+
+            Token dbToken = tokenOpt.get();
+            if (dbToken.isRevoked()) {
+                return false;
+            }
+
+            User user = dbToken.getUser();
+            if (user == null || user.getStatus() != UserStatus.ACTIVE) {
+                return false;
+            }
+
             return jwt.validate(token, EToken.REFRESH);
         } catch (Exception e) {
             return false;
@@ -52,7 +67,7 @@ public class TokenService {
 
     public void create(User user, String token, ClientInfo client) {
         if (token == null || token.trim().isEmpty()) {
-            throw new IllegalArgumentException("Token must not be null or empty");
+            throw new BadRequestException("Token must not be null or empty");
         }
         String hashedToken = hash(token);
         Token tokenEntity = Token.builder()
