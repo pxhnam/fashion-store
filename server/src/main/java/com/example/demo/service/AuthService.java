@@ -108,7 +108,7 @@ public class AuthService {
 
     public TokenResponse refreshToken(Cookie[] cookies) {
         if (cookies == null || cookies.length == 0) {
-            throw new BadCredentialsException("");
+            throw new BadCredentialsException("Missing refresh token");
         }
         String accessToken = Arrays.stream(cookies)
                 .filter(cookie -> jwt.getCookieName().equals(cookie.getName()))
@@ -116,12 +116,12 @@ public class AuthService {
                 .map(Cookie::getValue)
                 .map(token -> {
                     if (!tokenService.validate(token)) {
-                        throw new BadCredentialsException("");
+                        throw new BadCredentialsException("Invalid refresh token");
                     }
                     UUID id = jwt.getSubject(token, EToken.REFRESH);
                     return jwt.generate(id);
                 })
-                .orElseThrow(() -> new BadCredentialsException(""));
+                .orElseThrow(() -> new BadCredentialsException("Refresh token not found"));
 
         return authMapper.toResponse(accessToken);
     }
