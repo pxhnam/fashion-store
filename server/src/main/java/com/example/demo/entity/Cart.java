@@ -6,7 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity()
-@Table(name = "carts")
+@Table(name = "carts", uniqueConstraints = @UniqueConstraint(columnNames = { "user_id", "variant_id" }))
 @Getter
 @Setter
 @Builder
@@ -30,6 +30,6 @@ public class Cart extends BaseEntity {
     private Variant variant;
 
     @Column(nullable = false)
-    @Min(1)
-    private Integer quantity;
+    @Builder.Default
+    private Integer quantity = 1;
 }

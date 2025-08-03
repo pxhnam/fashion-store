@@ -15,8 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,8 +36,6 @@ public class Order extends BaseEntity {
     private String note;
 
     @Column(nullable = false, precision = 19, scale = 2)
-    @NotNull
-    @DecimalMin("0.00")
     private BigDecimal totalPrice;
 
     @Builder.Default

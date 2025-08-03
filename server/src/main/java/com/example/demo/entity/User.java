@@ -21,7 +21,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +41,6 @@ public class User extends BaseEntity {
     private String name;
 
     @Column(unique = true, nullable = false)
-    @Email
     private String email;
 
     private String password;

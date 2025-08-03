@@ -6,7 +6,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +24,6 @@ public class Token extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotBlank
     @Column(nullable = false)
     private String token;
 
