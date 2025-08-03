@@ -28,18 +28,13 @@ public class UserService {
         return userMapper.toResponseList(userRepository.findAll());
     }
 
-    private User findByIdOrThrow(UUID id) {
+    public User findById(UUID id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("User not found"));
     }
 
     private UserResponse save(User user) {
         return userMapper.toResponse(userRepository.save(user));
-    }
-
-    public UserResponse getById(UUID id) {
-        User user = findByIdOrThrow(id);
-        return userMapper.toResponse(user);
     }
 
     public UserResponse getByEmail(String email) {
@@ -53,7 +48,7 @@ public class UserService {
     }
 
     public UserResponse update(UUID id, UpdateUserRequest request) {
-        User user = findByIdOrThrow(id);
+        User user = findById(id);
         userRepository.findByEmail(request.getEmail())
                 .ifPresent(u -> {
                     if (!u.getId().equals(id)) {
@@ -65,7 +60,7 @@ public class UserService {
     }
 
     public UserResponse delete(UUID id) {
-        User user = findByIdOrThrow(id);
+        User user = findById(id);
         userRepository.delete(user);
         return userMapper.toResponse(user);
     }

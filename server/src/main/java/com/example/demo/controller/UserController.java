@@ -33,16 +33,6 @@ public class UserController {
         return userService.get();
     }
 
-    @GetMapping("{value}")
-    public UserResponse getByIdOrUsername(@PathVariable String value) {
-        try {
-            UUID uuid = UUID.fromString(value);
-            return userService.getById(uuid);
-        } catch (IllegalArgumentException e) {
-            return userService.getByEmail(value);
-        }
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse create(@Valid @RequestBody CreateUserRequest request) {
