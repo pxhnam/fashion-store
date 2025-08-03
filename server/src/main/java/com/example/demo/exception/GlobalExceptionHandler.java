@@ -128,6 +128,18 @@ public class GlobalExceptionHandler {
                 "Invalid request content type. 'multipart/form-data' is required.", request.getRequestURI());
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalArgumentException(
+            IllegalArgumentException ex,
+            HttpServletRequest request) {
+        log.warn("Illegal argument: {}", ex.getMessage());
+        return buildErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                "Invalid input parameter",
+                request.getRequestURI());
+    }
+
     // Security Exceptions
     @ExceptionHandler(AuthorizationDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)

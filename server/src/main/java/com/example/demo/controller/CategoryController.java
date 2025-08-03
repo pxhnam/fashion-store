@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.request.CreateCategoryRequest;
 import com.example.demo.dto.request.UpdateCategoryRequest;
 import com.example.demo.dto.response.CategoryResponse;
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.service.CategoryService;
 
 import jakarta.validation.Valid;
@@ -46,12 +45,8 @@ public class CategoryController {
     public CategoryResponse update(
             @PathVariable String id,
             @Valid @ModelAttribute UpdateCategoryRequest request) {
-        try {
-            UUID uuid = UUID.fromString(id);
-            return categoryService.update(uuid, request);
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Invalid UUID format: " + id);
-        }
+        UUID uuid = UUID.fromString(id);
+        return categoryService.update(uuid, request);
     }
 
     @DeleteMapping("{id}")

@@ -16,7 +16,6 @@ import com.example.demo.dto.request.CreateProductRequest;
 import com.example.demo.dto.request.UpdateProductRequest;
 import com.example.demo.dto.response.ProductDetailResponse;
 import com.example.demo.dto.response.ProductResponse;
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -47,16 +46,13 @@ public class ProductController {
     public ProductDetailResponse update(
             @PathVariable String id,
             @Valid @ModelAttribute UpdateProductRequest request) {
-        try {
-            UUID uuid = UUID.fromString(id);
-            return productService.update(uuid, request);
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Invalid UUID format: " + id);
-        }
+        UUID uuid = UUID.fromString(id);
+        return productService.update(uuid, request);
     }
 
     @DeleteMapping("{id}")
-    public String delete() {
-        return "deleted";
+    public String delete(@PathVariable String id) {
+        UUID uuid = UUID.fromString(id);
+        return "deleted" + uuid;
     }
 }

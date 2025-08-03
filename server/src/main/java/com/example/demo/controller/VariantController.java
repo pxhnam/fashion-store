@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.service.VariantService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,12 +19,8 @@ public class VariantController {
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable String id) {
-        try {
-            UUID uuid = UUID.fromString(id);
-            variantService.deleteById(uuid);
-            return "deleted";
-        } catch (IllegalArgumentException e) {
-            throw new BadRequestException("Invalid UUID format: " + id);
-        }
+        UUID uuid = UUID.fromString(id);
+        variantService.deleteById(uuid);
+        return "deleted";
     }
 }
