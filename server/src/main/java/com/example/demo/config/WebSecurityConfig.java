@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.example.demo.enums.ERole;
 import com.example.demo.exception.ForbiddenHandler;
 import com.example.demo.security.CurrentUserArgumentResolver;
 import com.example.demo.security.UserDetailsServiceImpl;
@@ -89,16 +90,16 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, fileStorageProperties.getUrlPattern())
                         .permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/users/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole(ERole.ADMIN.name())
+                        .requestMatchers("/users/**").hasRole(ERole.ADMIN.name())
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/carts/**").permitAll()
-                        .requestMatchers("/images/**").hasRole("ADMIN")
-                        .requestMatchers("/variants/**").hasRole("ADMIN")
+                        .requestMatchers("/carts/**").hasRole(ERole.USER.name())
+                        .requestMatchers("/images/**").hasRole(ERole.ADMIN.name())
+                        .requestMatchers("/variants/**").hasRole(ERole.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
-                        .requestMatchers("/products/**").hasRole("ADMIN")
+                        .requestMatchers("/products/**").hasRole(ERole.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
-                        .requestMatchers("/categories/**").hasRole("ADMIN")
+                        .requestMatchers("/categories/**").hasRole(ERole.ADMIN.name())
                         .anyRequest().authenticated())
                 .authenticationManager(authenticationManager(http))
                 .addFilterBefore(jwtFilter,
