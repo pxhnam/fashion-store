@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.request.CreateUserRequest;
 import com.example.demo.dto.request.UpdateUserRequest;
@@ -14,7 +15,6 @@ import com.example.demo.exception.NotFoundException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.request.LoginRequest;
 import com.example.demo.dto.request.RegisterRequest;
@@ -27,7 +28,6 @@ import com.example.demo.security.jwt.Jwt;
 import com.example.demo.util.MailUtil;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

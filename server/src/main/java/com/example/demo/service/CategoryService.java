@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.example.demo.dto.request.CreateCategoryRequest;
@@ -16,7 +17,6 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.util.SlugUtil;
 import com.example.demo.util.UploadUtil;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,6 +27,7 @@ public class CategoryService {
     private final SlugUtil slugUtil;
     private final CategoryMapper categoryMapper;
 
+    @Transactional(readOnly = true)
     public List<CategoryResponse> findAll() {
         List<Category> categories = categoryRepository.findAll();
         return categoryMapper.toResponseList(categories);
@@ -37,6 +38,7 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException("Category not found"));
     }
 
+    @Transactional(readOnly = true)
     public CategoryResponse findBySlug(String slug) {
         return categoryMapper.toResponse(categoryRepository.findBySlug(slug)
                 .orElseThrow(() -> new NotFoundException("Category not found")));

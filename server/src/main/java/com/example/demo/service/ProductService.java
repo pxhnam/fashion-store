@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.request.CreateProductRequest;
 import com.example.demo.dto.request.UpdateImageRequest;
@@ -25,7 +26,6 @@ import com.example.demo.repository.ProductRepository;
 import com.example.demo.util.SlugUtil;
 import com.example.demo.util.UploadUtil;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -37,6 +37,7 @@ public class ProductService {
     private final SlugUtil slugUtil;
     private final ProductMapper productMapper;
 
+    @Transactional(readOnly = true)
     public List<ProductResponse> findAll() {
         return productMapper.toResponseList(productRepository.findByStatus(ProductStatus.ACTIVE));
     }
@@ -47,6 +48,7 @@ public class ProductService {
                 .orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
+    @Transactional(readOnly = true)
     public ProductDetailResponse findBySlug(String slug) {
         return productMapper.toResponse(productRepository
                 .findBySlug(slug)
