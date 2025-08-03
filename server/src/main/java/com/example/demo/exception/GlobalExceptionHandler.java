@@ -18,6 +18,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -128,15 +129,24 @@ public class GlobalExceptionHandler {
                 "Invalid request content type. 'multipart/form-data' is required.", request.getRequestURI());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleIllegalArgumentException(
-            IllegalArgumentException ex,
+    public ErrorResponse handleMethodArgumentTypeMismatchException(
+            MethodArgumentTypeMismatchException ex,
             HttpServletRequest request) {
-        log.warn("Illegal argument: {}", ex.getMessage());
+
+        String param = ex.getName();
+        Object value = ex.getValue();
+        Class<?> requiredType = ex.getRequiredType();
+
+        String expectedType = (requiredType != null) ? requiredType.getSimpleName() : "Unknown";
+        String message = String.format("Parameter '%s' must be a valid '%s' value.", param, expectedType);
+        log.warn("Invalid value for parameter '{}': expected type '{}', but got value '{}'",
+                param, expectedType, value);
+
         return buildErrorResponse(
                 HttpStatus.BAD_REQUEST,
-                "Invalid input parameter",
+                message,
                 request.getRequestURI());
     }
 

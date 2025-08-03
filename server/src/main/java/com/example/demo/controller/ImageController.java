@@ -18,9 +18,8 @@ public class ImageController {
     private final ImageService imageService;
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
-        imageService.deleteById(uuid);
+    public String delete(@PathVariable UUID id) {
+        imageService.deleteById(id);
         return "deleted";
     }
 }

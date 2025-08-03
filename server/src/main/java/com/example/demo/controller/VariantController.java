@@ -18,9 +18,8 @@ public class VariantController {
     private final VariantService variantService;
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
-        variantService.deleteById(uuid);
+    public String delete(@PathVariable UUID id) {
+        variantService.deleteById(id);
         return "deleted";
     }
 }

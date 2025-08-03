@@ -44,15 +44,13 @@ public class ProductController {
 
     @PutMapping("{id}")
     public ProductDetailResponse update(
-            @PathVariable String id,
+            @PathVariable UUID id,
             @Valid @ModelAttribute UpdateProductRequest request) {
-        UUID uuid = UUID.fromString(id);
-        return productService.update(uuid, request);
+        return productService.update(id, request);
     }
 
     @DeleteMapping("{id}")
-    public String delete(@PathVariable String id) {
-        UUID uuid = UUID.fromString(id);
-        return "deleted" + uuid;
+    public String delete(@PathVariable UUID id) {
+        return "deleted";
     }
 }

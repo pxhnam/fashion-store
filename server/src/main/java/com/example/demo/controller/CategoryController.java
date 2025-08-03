@@ -43,14 +43,13 @@ public class CategoryController {
 
     @PutMapping("{id}")
     public CategoryResponse update(
-            @PathVariable String id,
+            @PathVariable UUID id,
             @Valid @ModelAttribute UpdateCategoryRequest request) {
-        UUID uuid = UUID.fromString(id);
-        return categoryService.update(uuid, request);
+        return categoryService.update(id, request);
     }
 
     @DeleteMapping("{id}")
-    public String delete() {
+    public String delete(@PathVariable UUID id) {
         return "deleted";
     }
 }
